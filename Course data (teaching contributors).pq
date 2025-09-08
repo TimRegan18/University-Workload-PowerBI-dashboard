@@ -1,7 +1,7 @@
 let
     Source = SharePoint.Files("https://uonstaff.sharepoint.com/sites/", [ApiVersion = 15]),
     #"Filtered Rows1" = Table.SelectRows(Source, each ([Extension] = ".xlsx") and ([Name] = "WL-PowerBI Data.xlsx")),
-    #"WL-PowerBI Data xlsx_https://uonstaff sharepoint com/sites/" = #"Filtered Rows1"{[Name="WL-PowerBI Data.xlsx",#"Folder Path"="https://uonstaff.sharepoint.com/sites/HCISS/Shared Documents/T&L/WorkloadCommittee/Forecasts/"]}[Content],
+    #"WL-PowerBI Data xlsx_https://uonstaff sharepoint com/sites/" = #"Filtered Rows1"{[Name="WL-PowerBI Data.xlsx",#"Folder Path"="https://uonstaff.sharepoint.com/sites/"]}[Content],
     #"Imported Excel Workbook" = Excel.Workbook(#"WL-PowerBI Data xlsx_https://uonstaff sharepoint com/sites/"),
     #"HCISS course data_Sheet" = #"Imported Excel Workbook"{[Item="Course data",Kind="Sheet"]}[Data],
     #"Promoted Headers" = Table.PromoteHeaders(#"HCISS course data_Sheet", [PromoteAllScalars=true]),
@@ -162,3 +162,4 @@ else [Proposed Coordinator]),
     #"Rounded Off" = Table.TransformColumns(#"Changed Type7",{{"WL ratio", each Number.Round(_, 3), type number}})
 in
     #"Rounded Off"
+
